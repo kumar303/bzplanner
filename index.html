@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bugzilla Planner</title>
+  <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+  <link rel="stylesheet" href="media/css/base.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="media/css/site.css" type="text/css" media="screen">
+  <!-- <link rel="shortcut icon" type="image/ico" href="/static/i/favicon.ico"> -->
+  <script type="text/javascript" src="media/js/jquery.1.5.min.js"></script>
+  <script type="text/javascript" src="media/js/site.js"></script>
+</head>
+
+<body class="apps">
+ <div class="wrapper">
+  <div id="top_nav">
+    <header>
+      <!-- <a class="home" href="/">Bug Planner</a> -->
+      <h1>Bug Planner</h1>
+      <div class="navigation">
+        <!-- <a href="/app/">Pay From an App</a> &middot;
+        <a href="/start_embedded_payment">Start Payment</a> &middot;
+        <a href="/start_preapproval">Start Preapproval</a> &middot;
+        <a href="/preapproval_status">Preapproval Status</a>  -->
+        <form>
+          <select><option>addons.mozilla.org</option></select>
+        </form>
+      </div>
+    </header>
+  </div>
+
+  <section class="content">
+    <div class="inner-content"></div>
+    <div class="cleared"></div>
+  </section>
+ </div>
+
+<div class="templates">
+  <div id="bug-template">
+    <div class="bug">
+      <p><a target="_blank" href="#"></a></p>
+    </div>
+  </div>
+  <div id="release-template">
+    <div class="release">
+      <h3 class="date"></h3>
+    </div>
+  </div>
+  <div id="bucket-template">
+    <div class="bucket">
+      <h4 class="priority"></h4>
+      <div class="bug-bucket"></div>
+    </div>
+  </div>
+  <div id="milestone-template">
+    <div class="milestone">
+      <h3 class="milestone-name"></h3>
+    </div>  
+  </div>
+</div>
+
+</body>
+</html>
