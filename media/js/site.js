@@ -65,12 +65,12 @@ exports.renderAllBugs = function() {
 
 exports.calculateReleases = function(bugsPerRelease) {
     if (!bugsPerRelease) {
-        bugsPerRelease = 5;  // TODO(Kumar) calculate as velocity
+        bugsPerRelease = 25;  // TODO(Kumar) calculate as velocity
     }
     var release,
-        today = new Date(),
+        today = Date.today().last().thursday(),
         counter = 0,
-        nextRelease = today;  // timedelta 7 days
+        releaseDate = today;
 
     release = function(date) {
         var $release = $($('#release-template').html());
@@ -83,30 +83,12 @@ exports.calculateReleases = function(bugsPerRelease) {
             $newRelease,
             $overflowBucket;
 
-        // Walk bug buckets and count bugs.
-        // If bug threshold is reached, remove bugs from the bucket into
-        // the next bucket.
-
         $('.bug', $bucket).each(function(i, elem) {
             var $bug = $(elem);
-            // if (overflowBugs.length) {
-            //     $overflowBucket = $($('#bucket-template').html());
-            //     $overflowBucket.attr('class', $bucket.attr('class'));
-            //     $overflowBucket.find('h4.priority').text($bucket.find('h4.priority').text());
-            //     if ($newRelease) {
-            //         $overflowBucket.insertAfter($newRelease);
-            //     } else {
-            //         $overflowBucket.insertBefore($bucket);
-            //     }
-            //     $.each(overflowBugs, function(i, elem) {
-            //         $('.bug-bucket', $overflowBucket).append(elem);
-            //         counter++;
-            //     });
-            //     overflowBugs = [];
-            // }
             counter++;
             if (counter == bugsPerRelease) {
-                $newRelease = release(nextRelease.toString());
+                releaseDate = releaseDate.add(1).week();
+                $newRelease = release(releaseDate.toString());
                 $newRelease.insertAfter($bug);
                 counter = 0;
             }
@@ -139,9 +121,11 @@ exports.renderBug = function(bug) {
         id = 'bug-' + bug.id,
         $bug,
         $bucket,
-        priority = (bug.priority && bug.priority != '--') ? bug.priority: '',
-        priorityClass = priority ? priority.toLowerCase(): 'no-priority',
-        summary = bug.summary;
+        priority = (bug.priority && bug.priority != '--') ? bug.priority: 'P5',
+        priorityClass = priority.toLowerCase(),
+        summary = bug.summary,
+        $priorityAfter,
+        $priorityBefore;
     if ($('#' + id).length) {
         return $('#' + id);
     }
@@ -156,8 +140,24 @@ exports.renderBug = function(bug) {
     } else {
         $bucket = $($('#bucket-template').html());
         $bucket.addClass(priorityClass);
-        $bucket.find('h4.priority').text(bug.priority || '');
-        $milestone.append($bucket);
+        $bucket.find('h4.priority').text(priority);
+        // Sort priorities so P1 comes before P2, etc
+        $('.bucket', $milestone).each(function(i, elem) {
+            if ($(elem).find('h4.priority').text() > priority) {
+                $priorityBefore = $(elem);
+            } else {
+                $priorityAfter = $(elem);
+            }
+        });
+        if ($priorityBefore) {
+            $bucket.insertBefore($priorityBefore);
+        } else if ($priorityAfter) {
+            $bucket.insertAfter($priorityAfter);
+        } else {
+            $milestone.append($bucket);
+        }
+        $priorityBefore = null;
+        $priorityAfter = null;
     }
     $('.bug-bucket', $bucket).append($bug);
     return $bug;
