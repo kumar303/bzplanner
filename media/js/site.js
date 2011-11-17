@@ -48,7 +48,7 @@ exports.renderAllBugs = function() {
     //          'target_milestone': '6.2.0', 'priority': 'P1'},
     //
     //          ]};
-    $.ajax({url: 'https://api-dev.bugzilla.mozilla.org/1.0/bug?bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&value0-0-0=UNCONFIRMED&target_milestone=Q1%202012&target_milestone=Q4%202011&target_milestone=6.3.5&target_milestone=6.3.4&target_milestone=6.3.3&target_milestone=6.3.2&target_milestone=6.3.1&target_milestone=6.3.0&product=addons.mozilla.org',
+    $.ajax({url: 'https://api-dev.bugzilla.mozilla.org/1.0/bug?priority=P1&priority=P2&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&value0-0-0=UNCONFIRMED&target_milestone=Q1%202012&target_milestone=Q4%202011&target_milestone=6.3.5&target_milestone=6.3.4&target_milestone=6.3.3&target_milestone=6.3.2&target_milestone=6.3.1&target_milestone=6.3.0&product=addons.mozilla.org',
             dataType: 'json',
             success: function(data, textStatus, jqXHR) {
                 $.each(data, function(key, item) {
@@ -65,16 +65,20 @@ exports.renderAllBugs = function() {
 
 exports.calculateReleases = function(bugsPerRelease) {
     if (!bugsPerRelease) {
-        bugsPerRelease = 25;  // TODO(Kumar) calculate as velocity
+        bugsPerRelease = 15;  // TODO(Kumar) calculate as velocity
     }
     var release,
-        today = Date.today().last().thursday(),
         counter = 0,
-        releaseDate = today;
+        releaseDate;
+    if (Date.today().getDayName() == 'Thursday') {
+        releaseDate = Date.today();
+    } else {
+        releaseDate = Date.today().last().thursday();
+    }
 
     release = function(date) {
         var $release = $($('#release-template').html());
-        $release.find('h3.date').text(date);
+        $release.find('h3.date').text('ETA: ' + date);
         return $release;
     };
 
