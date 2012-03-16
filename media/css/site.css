@@ -1,0 +1,100 @@
+
+header h1 {
+    float: left;
+    margin-left: 1em;
+    font-size: 150%;
+    color: #1b3b6a;
+}
+
+.templates,
+.hidden {
+    display: none;
+}
+
+.cleared {
+    clear: both;
+}
+
+.milestone {
+    padding-top: 0.5em;
+    clear: both;
+}
+
+.milestone h3.milestone-name {
+    padding: 0.2em;
+    color: #fff;
+    background-color: #AEAEAE;
+    border-bottom: 1px solid #000;
+    margin-bottom: 0.5em;
+}
+
+.milestone h3 {
+    font-size: 80%;
+}
+
+.milestone .release {
+    padding: 0.5em 0 1em 0;
+    clear: both;   
+}
+
+.milestone .release h3 {
+/*    background-image: -moz-linear-gradient(top, #910099 0%, #E2A8EA 100%);*/
+    color: #fff;
+    padding: 0.2em;
+    background-color: #E3A1E7;
+    border-bottom: 1px solid #99004A;
+}
+
+.bucket {
+    clear: both;
+}
+
+.bucket h4 {
+    font-size: 140%;
+    float: left;
+}
+
+.bucket.p1 h4 {
+    color: #E20015;
+}
+
+.bucket.p2 h4 {
+    color: #E95F00;
+}
+
+.bucket h4 {
+    color: #EB9C00;
+}
+
+.bucket div {
+    margin-left: 2.5em;
+}
+
+.bucket .bug {
+    float: left;
+    height: 1.9em;
+    width: 7em;
+/*    width: 20em;*/
+    color: #FFF;
+    margin: 2px;
+    padding: 0.2em;
+    background-color: #879CBA;
+    border: 1px solid #0044D3;
+    -moz-box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1);
+    box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.bucket .bug p {
+    text-decoration: none;
+    font-size: 77%;
+/*    text-overflow: ellipsis;*/
+}
+
+.bucket .bug p a {
+    color: #FFF;
+    text-decoration: none;
+}
