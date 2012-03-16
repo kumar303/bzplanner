@@ -4,7 +4,10 @@ can't move time! If you release once a week then it's useful to see what you
 can actually release next week, the week after, and two months after that.
 
 When you start to remove unimportant features from your team's workload you'll
-notice that you will magically release the important features faster :)
+notice that you will magically release the important features faster.
+
+This visualization of immutable time is inspired by `Pivotal Tracker`_
 
 .. _`Bugzilla`: https://bugzilla.mozilla.org/
 .. _`Scrum/Agile`: http://en.wikipedia.org/wiki/Scrum_%28development%29
+.. _`Pivotal Tracker`: http://www.pivotaltracker.com/
