@@ -3,52 +3,19 @@
 
 $(function() {
     exports.$content = $('section.content .inner-content');
-    exports.renderAllBugs();
+    $('#refresh-query').click(function(e) {
+        e.preventDefault();
+        var $self = $(this),
+            $form = $self.parent('form');
+        exports.renderAllBugs($form.find('[name=q-product]').val(),
+                              $form.find('[name=q-milestones]').val().split(' '));
+    });
+    $('#refresh-query').trigger('click');
 });
 
 
-exports.renderAllBugs = function() {
-    // var queryResult = {'bugs': [
-    //
-    //         {'id': 1, 'summary': 'Prototype of in-app payments to discover JavaScript API',
-    //          'target_milestone': '6.3.0', 'priority': 'P1'},
-    //         {'id': 101, 'summary': 'Stress test PJAX; adjust as necessary',
-    //          'target_milestone': '6.3.0', 'priority': 'P1'},
-    //         {'id': 102, 'summary': 'Nonconforming apps cause tracebacks instead of graceful errors ',
-    //          'target_milestone': '6.3.0', 'priority': 'P1'},
-    //
-    //         {'id': 2, 'summary': 'Stress test PJAX; adjust as necessary',
-    //          'target_milestone': '6.3.0', 'priority': 'P2'},
-    //         {'id': 201, 'summary': 'Nonconforming apps cause tracebacks instead of graceful errors ',
-    //          'target_milestone': '6.3.0', 'priority': 'P2'},
-    //         {'id': 202, 'summary': 'Stress test PJAX; adjust as necessary',
-    //          'target_milestone': '6.3.0', 'priority': 'P2'},
-    //         {'id': 203, 'summary': 'Nonconforming apps cause tracebacks instead of graceful errors ',
-    //          'target_milestone': '6.3.0', 'priority': 'P2'},
-    //
-    //         {'id': 3, 'summary': 'Nonconforming apps cause tracebacks instead of graceful errors ',
-    //          'target_milestone': '6.3.0', 'priority': 'P3'},
-    //         {'id': 301, 'summary': 'Prototype of in-app payments to discover JavaScript API',
-    //          'target_milestone': '6.3.0', 'priority': 'P3'},
-    //         {'id': 302, 'summary': 'Stress test PJAX; adjust as necessary',
-    //          'target_milestone': '6.3.0', 'priority': 'P3'},
-    //         {'id': 303, 'summary': 'Nonconforming apps cause tracebacks instead of graceful errors ',
-    //          'target_milestone': '6.3.0', 'priority': 'P3'},
-    //
-    //         {'id': 4, 'summary': 'Do something with another thing all the time make it work',
-    //          'target_milestone': '6.3.0', 'priority': 'P4'},
-    //         {'id': 5, 'summary': 'The systematic dysfunctioner clever thing needed',
-    //          'target_milestone': '6.3.0', 'priority': 'P4'},
-    //
-    //         {'id': 601, 'summary': 'Prototype of in-app payments to discover JavaScript API',
-    //          'target_milestone': '6.2.0', 'priority': 'P1'},
-    //         {'id': 602, 'summary': 'Stress test PJAX; adjust as necessary',
-    //          'target_milestone': '6.2.0', 'priority': 'P1'},
-    //         {'id': 603, 'summary': 'Nonconforming apps cause tracebacks instead of graceful errors ',
-    //          'target_milestone': '6.2.0', 'priority': 'P1'},
-    //
-    //          ]};
-    $.ajax({url: 'https://api-dev.bugzilla.mozilla.org/1.0/bug?priority=P1&priority=P2&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&value0-0-0=UNCONFIRMED&target_milestone=Q1%202012&target_milestone=Q4%202011&target_milestone=6.3.5&target_milestone=6.3.4&target_milestone=6.3.3&target_milestone=6.3.2&target_milestone=6.3.1&target_milestone=6.3.0&product=addons.mozilla.org',
+exports.renderAllBugs = function(product, milestones) {
+    $.ajax({url: exports.getUrl(product, milestones),
             dataType: 'json',
             success: function(data, textStatus, jqXHR) {
                 $.each(data, function(key, item) {
@@ -117,6 +84,14 @@ exports.clearReleases = function() {
             $lastBucket = $bucket;
         });
     });
+};
+
+
+exports.getUrl = function(product, milestones) {
+    var url = 'https://api-dev.bugzilla.mozilla.org/1.0/bug?priority=P1&priority=P2&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&value0-0-0=UNCONFIRMED';
+    url += '&target_milestone=' + milestones.join('&target_milestone=');
+    url += '&product=' + product;
+    return url;
 };
 
 

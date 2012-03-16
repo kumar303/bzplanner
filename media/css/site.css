@@ -3,8 +3,7 @@ header h1 {
     float: left;
     margin-left: 1em;
     font-size: 150%;
-    color: #FFF;
-    text-shadow: 1px 1px 0 #1b3b6a, 0 0 5px #1b3b6a;
+    color: #1b3b6a;
 }
 
 .templates,

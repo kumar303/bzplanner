@@ -17,8 +17,10 @@
       <header>
         <h1>Bug Planner</h1>
         <div class="navigation">
-          <form>
-            <select><option>addons.mozilla.org</option></select>
+          <form id="query">
+            Product: <input type="text" name="q-product" value="addons.mozilla.org">
+            Milestones: <input type="text" name="q-milestones" value="Q1%202012 Q2%202012 Q3%202012 Q4%202012">
+            <input id="refresh-query" type="submit" value="Refresh">
           </form>
         </div>
       </header>
